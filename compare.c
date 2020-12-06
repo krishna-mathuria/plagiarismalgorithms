@@ -9,7 +9,7 @@
 #include "winnowing.h"
 int len;
 int match = 0;
-
+int t=1;
 void printString (char *string, int size)
 {
   for (int i = 0; i < size; ++i)
@@ -21,7 +21,7 @@ void printString (char *string, int size)
 
 float calc (int match, int buffersize, float totalsize)
 {
-  float per = ((match * buffersize) / totalsize) * 100;
+  float per = ((match * 1) / totalsize) * 100;
   return per;
 
 }
@@ -116,7 +116,7 @@ int main (int argc, char **argv)
   storeInArray (txt, argv[2]);
 
   len = P;
-  float totalsize = calcsize (pat);
+  float totalsize = calcsize (txt);
   int count = 0;
   int i = 0, k = 0, s = 0;
   int point = 0;
@@ -131,13 +131,13 @@ int main (int argc, char **argv)
   while (point < len)
     {
       count = 0;
-      while (count < s)
+      while (count < t)
 	{
 	  buffer[k] = *(pat + i);
 	  if (*(pat + i) == ' ')
 	    {
 	      count++;
-	      if (count == s)
+	      if (count == t)
 		{
 		  buffer[k] = '\0';
 		  P = strlen (buffer);
@@ -151,8 +151,12 @@ int main (int argc, char **argv)
 	}
       point += tobeadded;
     }
-  calc (match, s, totalsize);
+    if( calc (match, s, totalsize) > 100){
+  printf ("Percentage from Rabin Karp algorithm = 100.000000\n");
+    }
+    else{
   printf ("Percentage from Rabin Karp algorithm = %f\n",calc(match, s, totalsize));
+    }
   free (buffer);
 //Naive Search Algorith Driver Code
   buffer = (char *) calloc (strlen (pat), sizeof (char));
@@ -169,7 +173,7 @@ int main (int argc, char **argv)
 
       count = 0;
 
-      while (count < s)
+      while (count < t)
 
 	{
 
@@ -181,7 +185,7 @@ int main (int argc, char **argv)
 
 	      count++;
 
-	      if (count == s)
+	      if (count == t)
 
 		{
 
@@ -208,8 +212,12 @@ int main (int argc, char **argv)
       point += tobeadded;
 
     }
-
+    if( calc (match, s, totalsize) > 100){
+  printf ("Percentage from Naive algorithm = 100.000000\n");
+    }
+    else{
   printf ("Percentage from Naive algorithm = %f\n",calc(match, s, totalsize));
+    }
   free(buffer);
 
 
@@ -217,22 +225,22 @@ int main (int argc, char **argv)
   buffer = (char *) calloc (strlen (pat), sizeof (char));
   i = k = 0;
   point = 0;
-  match = 0;
+  int matched = 0;
   while (point < len)
     {
       count = 0;
-      while (count < s)
+      while (count < t)
 	{
 	  buffer[k] = *(pat + i);
 	  if (*(pat + i) == ' ')
 	    {
 	      count++;
-	      if (count == s)
+	      if (count == t)
 		{
 		  buffer[k] = '\0';
 		  P = strlen (buffer);
 		  tobeadded = k;
-		  match += KMPSearch (buffer, txt);
+		  matched += KMPSearch (buffer, txt);
 		  k = -1;
 		}
 	    }
@@ -241,7 +249,12 @@ int main (int argc, char **argv)
 	}
       point += tobeadded;
     }
-  printf ("Percentage from KMP algorithm = %f\n",calc(match, s, totalsize));
+        if( calc (match, s, totalsize) > 100){
+  printf ("Percentage from KMP algorithm = 100.000000\n");
+    }
+    else{
+  printf ("Percentage from KMP algorithm = %f\n",calc(matched, s, totalsize));
+    }
   free(buffer);
   //Winnowing Driver Code
   count = 0;

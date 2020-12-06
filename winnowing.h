@@ -160,8 +160,8 @@ void compare(int* fval1, int* fval2){
       }
     }
     float total=c1+c2;
-    float result = (match/c1)*100;
-    printf("Percentage from Winnowing Algorithm: %f", result);
+    float result = (match/c2)*100;
+    printf("Percentage from Winnowing Algorithm: %f\n", result);
 }
 void preprocess(char *s, int count, int kk){
   k=kk;
